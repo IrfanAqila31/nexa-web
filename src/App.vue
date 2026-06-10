@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { useAuthStore } from './stores/authStore'
+
+// Memanggil fungsi dari Pinia untuk mengecek apakah token login masih ada
+const authStore = useAuthStore()
+authStore.initialize()
 </script>
 
 <template>
-  <RouterView />
+  <!-- Titik masuk utama untuk Vue Router -->
+  <router-view />
 </template>
-
-<style scoped></style>

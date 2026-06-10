@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated.value = false
     credit.value = 0
   }
-
+ 
   function useCredit() {
     if (credit.value > 0) {
       credit.value--
