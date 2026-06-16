@@ -4,6 +4,7 @@ const api = axios.create({
   baseURL: 'https://long-tires-report.loca.lt/api',
   headers: {
     'Content-Type': 'application/json',
+    'Bypass-Tunnel-Reminder': 'true',
   },
 })
 api.interceptors.request.use(
