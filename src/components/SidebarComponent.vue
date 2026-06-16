@@ -17,7 +17,7 @@ const handleLogout = () => {
       <h2 class="text-2xl font-bold">Nexa App</h2>
     </div>
 
-    <nav class="flex-grow px-4 space-y-2" aria-label="Navigasi Dashboard">
+    <nav class="grow px-4 space-y-2" aria-label="Navigasi Dashboard">
       <router-link
         to="/app"
         class="block py-2 px-4 rounded hover:bg-slate-700 transition"

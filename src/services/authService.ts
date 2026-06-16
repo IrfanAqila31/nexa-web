@@ -1,9 +1,9 @@
 import api from './api'
 
 export const authService = {
-  async login(username: string, password: string) {
+  async login(email: string, password: string) {
     const respon = await api.post('/auth/login', {
-      username: username,
+      email: email,
       password: password,
 
       expiresInMins: 60,
