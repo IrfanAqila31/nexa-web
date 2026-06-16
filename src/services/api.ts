@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://dummyjson.com',
+  baseURL: 'https://long-tires-report.loca.lt/api',
   headers: {
     'Content-Type': 'application/json',
   },
