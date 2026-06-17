@@ -27,13 +27,23 @@ export const useAuthStore = defineStore('auth', () => {
     credit.value = 2
   }
 
+  async function register(name: string, email: string, password: string) {
+    const data = await authService.register(name, email, password)
+
+    // Auto-login setelah register berhasil
+    localStorage.setItem('token', data.token)
+    user.value = data
+    isAuthenticated.value = true
+    credit.value = 2
+  }
+
   function logout() {
     localStorage.removeItem('token')
     user.value = null
     isAuthenticated.value = false
     credit.value = 0
   }
- 
+
   function useCredit() {
     if (credit.value > 0) {
       credit.value--
@@ -47,6 +57,7 @@ export const useAuthStore = defineStore('auth', () => {
     credit,
     useCredit,
     login,
+    register,
     logout,
     initialize,
   }

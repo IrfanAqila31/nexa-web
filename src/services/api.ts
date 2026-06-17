@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://long-tires-report.loca.lt/api',
+  baseURL: 'https://nexa-backend-lake.vercel.app/api',
   headers: {
     'Content-Type': 'application/json',
     'Bypass-Tunnel-Reminder': 'true',

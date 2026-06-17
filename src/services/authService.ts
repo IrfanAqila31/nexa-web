@@ -5,8 +5,14 @@ export const authService = {
     const respon = await api.post('/auth/login', {
       email: email,
       password: password,
-
-      expiresInMins: 60,
+    })
+    return respon.data
+  },
+  async register(name: string, email: string, password: string) {
+    const respon = await api.post('/auth/register', {
+      name: name,
+      email: email,
+      password: password,
     })
     return respon.data
   },
