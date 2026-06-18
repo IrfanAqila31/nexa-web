@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
+import { toast } from 'vue-sonner'
+
 import { useForm, useField } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
+import { ref } from 'vue'
+import PrimaryButton from '../components/PrimaryButton.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
-const toast = useToast()
+
+const showPassword = ref(false)
 
 const loginSchema = toTypedSchema(
   z.object({
-    email: z.string().email('Format email tidak valid').min(1, 'email tidak boleh kosong'),
-    password: z.string().min(6, 'Password minimal 6 karakter'),
+    email: z.email({ error: 'Format email tidak valid atau kosong' }).default(''),
+    password: z.string().min(6, { message: 'Password minimal 6 karakter' }).default(''),
   }),
 )
 
@@ -37,93 +41,132 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="w-full max-w-md relative">
+  <!-- Menggunakan <section> sebagai pembungkus utama -->
+  <section class="w-full max-w-md pt-26" aria-labelledby="login-heading">
     <div
       class="bg-gray-900/80 backdrop-blur-xl border border-gray-800 p-8 rounded-2xl shadow-2xl relative z-10"
     >
-      <div class="text-center mb-8">
-        <h2
-          class="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-purple-500 mb-2"
+      <!-- Menggunakan <header> untuk bagian judul -->
+      <header class="text-center mb-8">
+        <h1
+          id="login-heading"
+          class="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-lime-300 to-lime-500 mb-2"
         >
           Nexa
-        </h2>
-        <p class="text-gray-400 text-sm">Selamat datang kembali! Silakan login.</p>
-      </div>
+        </h1>
+        <p class="text-gray-400 text-sm">Selamat datang kembali! Silakan login</p>
+      </header>
 
-      <form @submit.prevent="onSubmit" class="space-y-5">
+      <!-- Menambahkan aria-label pada form -->
+      <form @submit.prevent="onSubmit" class="space-y-5" aria-label="Formulir Login">
+        <!-- Input Email -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
           <input
+            id="email"
             v-model="email"
             type="email"
-            class="w-full px-4 py-2.5 bg-gray-950/50 border rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
+            autocomplete="off"
+            class="w-full px-4 py-2.5 bg-slate-950 border rounded-xl text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 autofill:shadow-[inset_0_0_0_30px_#030712] autofill:[-webkit-text-fill-color:#f3f4f6]"
             :class="
               emailError
                 ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500'
-                : 'border-gray-800'
+                : 'border-lime-600'
             "
             placeholder="Masukkan email"
+            :aria-invalid="!!emailError"
           />
-          <p v-if="emailError" class="mt-1.5 text-xs text-red-400">{{ emailError }}</p>
+          <p v-if="emailError" class="mt-1.5 text-xs text-red-400" role="alert">{{ emailError }}</p>
         </div>
 
+        <!-- Input Password -->
         <div>
           <div class="flex justify-between items-center mb-1">
-            <label class="block text-sm font-medium text-gray-300">Password</label>
-            <a href="#" class="text-xs text-blue-400 hover:text-blue-300 transition-colors"
-              >Lupa Password?</a
+            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+            <button
+              type="button"
+              @click="showPassword = !showPassword"
+              class="text-gray-400 hover:text-gray-300 transition-colors mr-2"
+              :title="showPassword ? 'Sembunyikan password' : 'Lihat password'"
+              :aria-label="showPassword ? 'Sembunyikan password' : 'Lihat password'"
             >
+              <svg
+                v-if="showPassword"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5"
+              >
+                <path
+                  d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-eye-closed-icon lucide-eye-closed h-5 w-5"
+              >
+                <path d="m15 18-.722-3.25" />
+                <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                <path d="m20 15-1.726-2.05" />
+                <path d="m4 15 1.726-2.05" />
+                <path d="m9 18 .722-3.25" />
+              </svg>
+            </button>
           </div>
           <input
+            id="password"
             v-model="password"
-            type="password"
-            class="w-full px-4 py-2.5 bg-gray-950/50 border rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
+            :type="showPassword ? 'text' : 'password'"
+            autocomplete="new-password"
+            class="w-full px-4 py-2.5 mb-5 bg-gray-950/30 border rounded-xl text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 autofill:shadow-[inset_0_0_0_30px_#030712] autofill:[-webkit-text-fill-color:#f3f4f6]"
             :class="
               passwordError
                 ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500'
-                : 'border-gray-800'
+                : 'border-lime-600'
             "
             placeholder="••••••••"
+            :aria-invalid="!!passwordError"
           />
-          <p v-if="passwordError" class="mt-1.5 text-xs text-red-400">{{ passwordError }}</p>
+          <p v-if="passwordError" class="mt-1.5 text-xs text-red-400" role="alert">
+            {{ passwordError }}
+          </p>
         </div>
 
-        <button
+        <PrimaryButton
           type="submit"
-          :disabled="isSubmitting"
-          class="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-2.5 px-4 rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+          :isLoading="isSubmitting"
+          loadingText="Memeriksa kredensial..."
         >
-          <svg
-            v-if="isSubmitting"
-            class="animate-spin h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          {{ isSubmitting ? 'Memeriksa...' : 'Login' }}
-        </button>
+          Login Sekarang
+        </PrimaryButton>
       </form>
 
-      <div class="mt-8 pt-6 border-t border-gray-800/60 text-center">
-        <p class="text-xs text-gray-500">
-          Coba gunakan email: <span class="text-gray-300 font-medium">emily@gmail.com</span> /
-          password: <span class="text-gray-300 font-medium">emilyspass</span>
+      <!-- Menggunakan <footer> untuk bagian bawah komponen -->
+      <footer class="mt-8 pt-6 border-t border-gray-800/60 text-center">
+        <p class="text-sm text-gray-400">
+          Belum punya akun?
+          <RouterLink
+            to="/register"
+            class="text-blue-400 hover:text-blue-300 font-medium transition-colors ml-1"
+          >
+            Daftar sekarang
+          </RouterLink>
         </p>
-      </div>
+      </footer>
     </div>
-  </div>
+  </section>
 </template>

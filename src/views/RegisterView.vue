@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
-import { useToast } from 'vue-toastification'
+import { toast } from 'vue-sonner'
 import { useForm, useField } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
+import PrimaryButton from '../components/PrimaryButton.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
-const toast = useToast()
 
 const registerSchema = toTypedSchema(
   z.object({
@@ -40,25 +40,36 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="w-full max-w-md relative">
+  <!-- Menggunakan tag <section> untuk menandakan bagian mandiri, lengkap dengan label untuk pembaca layar -->
+  <section class="w-full max-w-md relative pb-16 pt-16" aria-labelledby="register-heading">
     <div
       class="bg-gray-900/80 backdrop-blur-xl border border-gray-800 p-8 rounded-2xl shadow-2xl relative z-10"
     >
-      <div class="text-center mb-8">
-        <h2
+      <!-- Bagian kepala form menggunakan tag <header> -->
+      <header class="text-center mb-8">
+        <!-- Menggunakan <h1> karena ini adalah judul paling utama di komponen ini -->
+        <h1
+          id="register-heading"
           class="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-purple-500 mb-2"
         >
           Nexa
-        </h2>
-        <p class="text-gray-400 text-sm">Daftar Aku Baru.</p>
-      </div>
+        </h1>
+        <p class="text-gray-400 text-sm">Daftar Akun Baru.</p>
+      </header>
 
-      <form @submit.prevent="onSubmit" class="space-y-5">
+      <!-- Menambahkan aria-label pada form -->
+      <form @submit.prevent="onSubmit" class="space-y-5" aria-label="Formulir Pendaftaran">
+        <!-- Input Nama -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-1">Nama Lengkap</label>
+          <!-- Menghubungkan label dan input menggunakan atribut 'for' dan 'id' -->
+          <label for="name" class="block text-sm font-medium text-gray-300 mb-1"
+            >Nama Lengkap</label
+          >
           <input
+            id="name"
             v-model="name"
             type="text"
+            autocomplete="name"
             class="w-full px-4 py-2.5 bg-gray-950/50 border rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
             :class="
               nameError
@@ -66,15 +77,20 @@ const onSubmit = handleSubmit(async (values) => {
                 : 'border-gray-800'
             "
             placeholder="Masukkan nama Anda"
+            :aria-invalid="!!nameError"
           />
-          <p v-if="nameError" class="mt-1.5 text-xs text-red-400">{{ nameError }}</p>
+         
+          <p v-if="nameError" class="mt-1.5 text-xs text-red-400" role="alert">{{ nameError }}</p>
         </div>
 
+        <!-- Input Email -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
           <input
+            id="email"
             v-model="email"
             type="email"
+            autocomplete="email"
             class="w-full px-4 py-2.5 bg-gray-950/50 border rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
             :class="
               emailError
@@ -82,17 +98,21 @@ const onSubmit = handleSubmit(async (values) => {
                 : 'border-gray-800'
             "
             placeholder="Masukkan email"
+            :aria-invalid="!!emailError"
           />
-          <p v-if="emailError" class="mt-1.5 text-xs text-red-400">{{ emailError }}</p>
+          <p v-if="emailError" class="mt-1.5 text-xs text-red-400" role="alert">{{ emailError }}</p>
         </div>
 
+        <!-- Input Password -->
         <div>
-          <div class="flex justify-between items-center mb-1">
-            <label class="block text-sm font-medium text-gray-300">Password</label>
-          </div>
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-1"
+            >Password</label
+          >
           <input
+            id="password"
             v-model="password"
             type="password"
+            autocomplete="new-password"
             class="w-full px-4 py-2.5 bg-gray-950/50 border rounded-xl text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200"
             :class="
               passwordError
@@ -100,48 +120,28 @@ const onSubmit = handleSubmit(async (values) => {
                 : 'border-gray-800'
             "
             placeholder="••••••••"
+            :aria-invalid="!!passwordError"
           />
-          <p v-if="passwordError" class="mt-1.5 text-xs text-red-400">{{ passwordError }}</p>
+          <p v-if="passwordError" class="mt-1.5 text-xs text-red-400" role="alert">
+            {{ passwordError }}
+          </p>
         </div>
 
-        <button
-          type="submit"
-          :disabled="isSubmitting"
-          class="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold py-2.5 px-4 rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
-        >
-          <svg
-            v-if="isSubmitting"
-            class="animate-spin h-5 w-5 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-          {{ isSubmitting ? 'Memeriksa...' : 'Daftar Sekarang' }}
-        </button>
+        <!-- Tombol Submit Semantic (Menggunakan komponen buatan kita sendiri) -->
+        <PrimaryButton type="submit" :isLoading="isSubmitting" loadingText="Memeriksa...">
+          Daftar Sekarang
+        </PrimaryButton>
       </form>
 
-      <div class="mt-8 pt-6 border-t border-gray-800/60 text-center">
+      <!-- Bagian kaki komponen dibungkus menggunakan tag <footer> -->
+      <footer class="mt-8 pt-6 border-t border-gray-800/60 text-center">
         <p class="text-xs text-gray-500">
           Sudah punya akun?
           <router-link to="/login" class="text-blue-400 hover:text-blue-300 transition-colors">
             Login di sini
           </router-link>
         </p>
-      </div>
+      </footer>
     </div>
-  </div>
+  </section>
 </template>
