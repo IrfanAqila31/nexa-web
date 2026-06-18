@@ -41,12 +41,10 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <!-- Menggunakan <section> sebagai pembungkus utama -->
   <section class="w-full max-w-md pt-26" aria-labelledby="login-heading">
     <div
       class="bg-gray-900/80 backdrop-blur-xl border border-gray-800 p-8 rounded-2xl shadow-2xl relative z-10"
     >
-      <!-- Menggunakan <header> untuk bagian judul -->
       <header class="text-center mb-8">
         <h1
           id="login-heading"
@@ -57,7 +55,6 @@ const onSubmit = handleSubmit(async (values) => {
         <p class="text-gray-400 text-sm">Selamat datang kembali! Silakan login</p>
       </header>
 
-      <!-- Menambahkan aria-label pada form -->
       <form @submit.prevent="onSubmit" class="space-y-5" aria-label="Formulir Login">
         <!-- Input Email -->
         <div>
@@ -67,11 +64,11 @@ const onSubmit = handleSubmit(async (values) => {
             v-model="email"
             type="email"
             autocomplete="off"
-            class="w-full px-4 py-2.5 bg-slate-950 border rounded-xl text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 autofill:shadow-[inset_0_0_0_30px_#030712] autofill:[-webkit-text-fill-color:#f3f4f6]"
+            class="w-full px-4 py-2.5 bg-slate-950 border rounded-xl text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-lime-500/60 focus:border-lime-500 transition-all duration-200 autofill:shadow-[inset_0_0_0_30px_#030712] autofill:[-webkit-text-fill-color:#f3f4f6]"
             :class="
               emailError
                 ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500'
-                : 'border-lime-600'
+                : 'border-slate-600'
             "
             placeholder="Masukkan email"
             :aria-invalid="!!emailError"
@@ -132,11 +129,11 @@ const onSubmit = handleSubmit(async (values) => {
             v-model="password"
             :type="showPassword ? 'text' : 'password'"
             autocomplete="new-password"
-            class="w-full px-4 py-2.5 mb-5 bg-gray-950/30 border rounded-xl text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 autofill:shadow-[inset_0_0_0_30px_#030712] autofill:[-webkit-text-fill-color:#f3f4f6]"
+            class="w-full px-4 py-2.5 mb-5 bg-slate-950 border rounded-xl text-slate-300 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-lime-500/60 focus:border-lime-500 transition-all duration-200 autofill:shadow-[inset_0_0_0_30px_#030712] autofill:[-webkit-text-fill-color:#f3f4f6]"
             :class="
               passwordError
                 ? 'border-red-500/50 focus:ring-red-500/50 focus:border-red-500'
-                : 'border-lime-600'
+                : 'border-slate-600'
             "
             placeholder="••••••••"
             :aria-invalid="!!passwordError"
@@ -157,11 +154,11 @@ const onSubmit = handleSubmit(async (values) => {
 
       <!-- Menggunakan <footer> untuk bagian bawah komponen -->
       <footer class="mt-8 pt-6 border-t border-gray-800/60 text-center">
-        <p class="text-sm text-gray-400">
+        <p class="text-xs md:text-sm text-slate-400">
           Belum punya akun?
           <RouterLink
             to="/register"
-            class="text-blue-400 hover:text-blue-300 font-medium transition-colors ml-1"
+            class="text-lime-400 hover:text-lime-300 font-medium transition-colors ml-1"
           >
             Daftar sekarang
           </RouterLink>
