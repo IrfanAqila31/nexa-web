@@ -3,13 +3,13 @@ import NavbarComponent from '../components/NavbarComponent.vue'
 </script>
 
 <template>
-  <div class="bg-zinc-900 min-h-screen px-4">
+  <div class="bg-zinc-950 min-h-screen px-4">
     <NavbarComponent
       v-if="$route.name !== 'login' && $route.name !== 'register'"
       class="relative z-20"
     />
 
-    <main class="grow flex justify-center items-center relative z-10 p-4" role="main">
+    <main class="grow flex justify-center items-center relative z-10" role="main">
       <router-view />
     </main>
 
