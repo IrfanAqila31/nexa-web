@@ -3,7 +3,7 @@ import NavbarComponent from '../components/NavbarComponent.vue'
 </script>
 
 <template>
-  <div class="bg-zinc-900 min-h-screen">
+  <div class="bg-zinc-900 min-h-screen px-4">
     <NavbarComponent
       v-if="$route.name !== 'login' && $route.name !== 'register'"
       class="relative z-20"
