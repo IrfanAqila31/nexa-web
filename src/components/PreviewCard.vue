@@ -42,7 +42,7 @@ defineProps<Props>()
                 clip-rule="evenodd"
               />
             </svg>
-            <span class="text-xs font-semibold text-lime-400 tracking-wide">HASIL GENERATE AI</span>
+            <span class="text-xs font-semibold text-lime-400 tracking-wide">Buat Caption Cepat</span>
           </span>
 
           <!-- Badge Platform Name -->
@@ -50,7 +50,7 @@ defineProps<Props>()
             class="inline-flex items-center px-3 py-1 bg-slate-800 border border-slate-700 rounded-full"
           >
             <span class="text-xs font-semibold text-slate-300 tracking-wide"
-              >Tujuan: {{ platformName }}</span
+              >Platform: {{ platformName }}</span
             >
           </span>
         </div>

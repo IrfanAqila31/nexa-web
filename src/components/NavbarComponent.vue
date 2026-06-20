@@ -10,9 +10,9 @@ const isMenuOpen = ref<boolean>(false)
     role="banner"
   >
     <h1
-      class="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-lime-400 to-lime-500"
+      class="text-xl md:text-2xl font-extrabold bg-clip-text text-transparent bg-linear-to-r from-lime-400 to-lime-500"
     >
-      Nexa
+      Easy Caption
     </h1>
     <!-- absolute left-1/2 -translate-x-1/2 untuk menengahkan nav -->
     <nav

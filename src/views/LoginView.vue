@@ -50,7 +50,7 @@ const onSubmit = handleSubmit(async (values) => {
           id="login-heading"
           class="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-lime-300 to-lime-500 mb-2"
         >
-          Nexa
+          Easy Caption
         </h1>
         <p class="text-gray-400 text-sm">Selamat datang kembali! Silakan login</p>
       </header>
