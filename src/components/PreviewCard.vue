@@ -11,18 +11,18 @@ defineProps<Props>()
 </script>
 
 <template>
-  <!-- Menggunakan <article> karena ini konten mandiri/utuh -->
+
   <article
     class="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-3xl p-6 md:p-6 text-left w-[350px] md:w-[400px] shrink-0 shadow-2xl relative overflow-hidden"
   >
-    <!-- Hiasan Cahaya (Disembunyikan dari pembaca layar karena cuma hiasan) -->
+  
     <div
       class="absolute -top-10 -right-10 w-32 h-32 bg-lime-500/20 blur-3xl rounded-full"
       aria-hidden="true"
     ></div>
 
     <div class="relative z-10">
-      <!-- <header> untuk pengenalan/judul artikel -->
+
       <header>
         <div class="flex flex-wrap items-center gap-3 mb-4">
           <!-- Badge AI -->
@@ -63,9 +63,7 @@ defineProps<Props>()
         {{ caption }}
       </p>
 
-      <!-- <footer> untuk informasi pelengkap (metadata) seperti mention dan hashtag -->
       <footer>
-        <!-- Menggunakan <ul> karena ini adalah daftar mention -->
         <ul aria-label="Daftar Mention" class="flex flex-wrap gap-2 text-sm mb-3 list-none">
           <li v-for="(userMention, index) in mention" :key="index">
             <span class="text-white font-medium cursor-pointer hover:underline">

@@ -10,7 +10,7 @@ defineProps<{
   <button
     :type="type || 'button'"
     :disabled="isLoading"
-    class="w-full bg-linear-to-r from-lime-600 to-green-600 hover:from-lime-500 hover:to-green-500 text-white cursor-pointer font-semibold py-2.5 px-4 rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+    class="w-full bg-linear-to-r from-lime-600 to-green-600 hover:from-lime-500 hover:to-green-500 text-white cursor-pointer font-semibold py-2.5 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
   >
     <!-- Ikon Loading bawaan Tailwind -->
     <svg

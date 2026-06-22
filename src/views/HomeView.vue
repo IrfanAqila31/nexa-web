@@ -13,7 +13,7 @@ const previewCards = [
   },
   {
     platform: 'Instagram',
-    title: '🎙️ Rahasia Sukses Usia 20-an (Bocor!)',
+    title: 'Rahasia Sukses Usia 20-an (Bocor!)',
     caption:
       'CEO sukses ini bocorin mindset gila yang bikin dia bisa raih miliaran sebelum umur 30. Simak sampai habis! 💸✨',
     mention: ['@DeddyCorbuzier', '@RaymondChin'],
@@ -21,7 +21,7 @@ const previewCards = [
   },
   {
     platform: 'YouTube',
-    title: '💻 Cara Cepat Belajar Coding Pemula!',
+    title: 'Cara Cepat Belajar Coding Pemula!',
     caption:
       'Pusing belajar coding? Terapkan trik 3 langkah ini. Dijamin dalam 1 bulan udah bisa bikin website! Link di kolom komentar! 🚀',
     mention: ['@WebProgrammingUNPAS', '@SandhikaGalih'],
@@ -29,7 +29,7 @@ const previewCards = [
   },
   {
     platform: 'Tiktok',
-    title: '📱 Review iPhone 15 Pro: Worth It?!',
+    title: 'Review iPhone 15 Pro: Worth It?!',
     caption:
       'Jujur-juran setelah pakai sebulan penuh. Baterainya awet atau gimmick? Kamera barunya gimana? Tonton review lengkapnya! 🍎🔍',
     mention: ['@GadgetIn', '@DavidBrendi'],
@@ -37,7 +37,7 @@ const previewCards = [
   },
   {
     platform: 'Instagram Reels',
-    title: '✈️ Hidden Gem Bali! Masih Sepi Banget!',
+    title: 'Hidden Gem Bali! Masih Sepi Banget!',
     caption:
       'Tempat liburan estetik di Bali yang belum banyak orang tahu. View-nya pantai privat. Jangan lupa save video ini! 🏖️🍹',
     mention: ['@BaliLife', '@ExploreBali'],
