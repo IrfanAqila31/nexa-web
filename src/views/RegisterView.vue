@@ -41,17 +41,19 @@ const onSubmit = handleSubmit(async (values) => {
     toast.error('Registrasi Gagal! Silakan coba lagi.')
   }
 })
-const handleGoogleLogin = async (respone: { credential?: string }) => {
+
+const handleGoogleLogin = async (response: { credential?: string }) => {
   try {
-    if (!respone.credential) throw new Error('Token tidak ditemukan')
-    // response.credential adalah ID Token yang dikirim oleh Google
-    const idToken = respone.credential
+    if (!response.credential) throw new Error('Token tidak ditemukan')
+
+    const idToken = response.credential
     await authStore.loginWithGoogle(idToken)
-    toast.success('Login Google Berhasil!')
+
+    toast.success('Pendaftaran Google Berhasil!')
     router.push('/')
   } catch (error) {
-    toast.error('Login Google Gagal Silahkan Coba Lagi')
-    console.log(error)
+    toast.error('Pendaftaran Google Gagal! Silakan coba lagi.')
+    console.error(error)
   }
 }
 </script>
@@ -186,13 +188,15 @@ const handleGoogleLogin = async (respone: { credential?: string }) => {
           Daftar Sekarang
         </PrimaryButton>
       </form>
+
+      <!-- Garis Pemisah (Atau) -->
       <div class="mt-6 flex items-center justify-center space-x-3">
         <div class="h-px bg-slate-800 flex-1"></div>
         <span class="text-xs text-slate-500 font-medium uppercase">Atau</span>
         <div class="h-px bg-slate-800 flex-1"></div>
       </div>
 
-      <!-- button login google -->
+      <!-- Tombol Login Google Resmi -->
       <div class="mt-6 flex justify-center">
         <GoogleLogin
           :callback="handleGoogleLogin"
