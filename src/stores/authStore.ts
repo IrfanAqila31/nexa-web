@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { authService } from '@/services/authService'
-import { boolean } from 'zod'
+import { boolean, string } from 'zod'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
@@ -37,6 +37,15 @@ export const useAuthStore = defineStore('auth', () => {
     credit.value = 2
   }
 
+  async function loginWithGoogle(googleToken: string) {
+    const data = await authService.loginWithGoogle(googleToken)
+    // menyimpan token aplikasi dan data user
+    localStorage.setItem('token', data.token)
+    user.value = data.user
+    isAuthenticated.value = true
+    credit.value = 2
+  }
+
   function logout() {
     localStorage.removeItem('token')
     user.value = null
@@ -60,5 +69,6 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     logout,
     initialize,
+    loginWithGoogle,
   }
 })

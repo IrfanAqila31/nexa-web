@@ -16,4 +16,8 @@ export const authService = {
     })
     return respon.data
   },
+  async loginWithGoogle(token: string) {
+    const respon = await api.post('/auth/google', { token: token })
+    return respon.data
+  },
 }
