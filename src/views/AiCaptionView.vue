@@ -18,8 +18,9 @@ const isLoading = ref<boolean>(false)
 
 onMounted(async () => {
   try {
-    const data = await clipcardService.getAllClipcards()
-    clipcards.value = data
+    const respon = await clipcardService.getAllClipcards()
+    // Karena respons Backend ada di dalam properti "data", kita panggil respon.data
+    clipcards.value = respon.data || []
   } catch (error) {
     console.error('Gagal mengambil daftar ClipCard:', error)
     toast.error('Gagal mengambil daftar ClipCard')
