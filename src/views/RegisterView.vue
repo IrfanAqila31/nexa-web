@@ -50,7 +50,7 @@ const handleGoogleLogin = async (response: { credential?: string }) => {
     await authStore.loginWithGoogle(idToken)
 
     toast.success('Pendaftaran Google Berhasil!')
-    router.push('/')
+    router.push('/dashboard')
   } catch (error) {
     toast.error('Pendaftaran Google Gagal! Silakan coba lagi.')
     console.error(error)

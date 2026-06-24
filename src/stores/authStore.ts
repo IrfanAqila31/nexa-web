@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { authService } from '@/services/authService'
-import { boolean, string } from 'zod'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(null)
+  const user = ref<{ name: string; email: string } | null>(null)
+
   const isAuthenticated = ref<boolean>(false)
 
   const credit = ref<number>(0)
