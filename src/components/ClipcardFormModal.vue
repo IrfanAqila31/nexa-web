@@ -6,7 +6,6 @@ import PrimaryButton from './PrimaryButton.vue'
 import { clipcardService } from '../services/clipcardService'
 import { toast } from 'vue-sonner'
 
-
 const emit = defineEmits(['close'])
 
 const clipcardSchema = toTypedSchema(
@@ -14,6 +13,7 @@ const clipcardSchema = toTypedSchema(
     videoReference: z.string().min(1, { message: 'Judul/Referensi wajib diisi' }).default(''),
     platformName: z.string().min(1, { message: 'Platform wajib dipilih' }).default('Tiktok'),
     caption: z.string().default(''),
+    platformId: z.string().default(''),
     hashtags: z.string().default(''),
     mentions: z.string().default(''),
   }),
@@ -28,6 +28,7 @@ const { value: platformName, errorMessage: platformError } = useField<string>('p
 const { value: caption } = useField<string>('caption')
 const { value: hashtags } = useField<string>('hashtags')
 const { value: mentions } = useField<string>('mentions')
+const { value: platformId } = useField<string>('platformId')
 
 const onSubmit = handleSubmit(async (values) => {
   try {
@@ -36,6 +37,7 @@ const onSubmit = handleSubmit(async (values) => {
       videoReference: values.videoReference,
       platformData: [
         {
+          platformId: values.platformId,
           platformName: values.platformName,
           caption: values.caption,
           hashtags: values.hashtags,
@@ -129,6 +131,17 @@ const onSubmit = handleSubmit(async (values) => {
             class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-lime-500/60 focus:border-lime-500"
             placeholder="Tulis cerita atau penjelasan menarik di sini..."
           ></textarea>
+          <div class="mt-3">
+            <label class="block text-sm font-medium text-slate-300 mb-1"
+              >Kode / ID Referensi (Opsional)</label
+            >
+            <input
+              v-model="platformId"
+              type="text"
+              class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-lime-500/60 focus:border-lime-500"
+              placeholder="(Opsional)"
+            />
+          </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>

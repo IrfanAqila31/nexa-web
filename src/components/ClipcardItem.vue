@@ -4,6 +4,7 @@ defineProps<{
     id: string
     videoReference: string
     platformData: {
+      platformId?: string
       platformName: string
       caption?: string
       hashtags?: string
@@ -40,26 +41,6 @@ defineProps<{
       >
         <!-- Baris Lencana (Badges) -->
         <div class="flex flex-wrap items-center gap-3 mb-4">
-          <!-- Badge Icon Petir (Style PreviewCard) -->
-          <span
-            class="inline-flex items-center gap-2 px-3 py-1 bg-lime-500/10 border border-lime-500/20 rounded-full"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 text-lime-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.381z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <span class="text-xs font-semibold text-lime-400 tracking-wide">Clipcard</span>
-          </span>
-
           <!-- Badge Nama Platform -->
           <span
             class="inline-flex items-center px-3 py-1 bg-slate-800 border border-slate-700 rounded-full"
@@ -74,7 +55,13 @@ defineProps<{
         <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-6 flex-1 wrap-break-word">
           {{ platform.caption || 'Tidak ada caption' }}
         </p>
-
+        <div v-if="platform.platformId" class="mb-4">
+          <span
+            class="inline-block px-3 py-1.5 bg-slate-800/80 border border-slate-700 rounded-lg text-xs font-mono text-lime-400 font-bold tracking-wider"
+          >
+            Kode: {{ platform.platformId }}
+          </span>
+        </div>
         <!-- Footer: Mention & Hashtag -->
         <footer class="mt-auto">
           <!-- Mention (Warna Putih + Hover Garis Bawah seperti PreviewCard) -->
