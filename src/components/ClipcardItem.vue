@@ -9,8 +9,7 @@ interface PlatformData {
   mentions?: string
 }
 
-// Beri nama 'props' pada defineProps agar bisa dipanggil di fungsi bawahnya
-const props = defineProps<{
+defineProps<{
   clipcard: {
     id: string
     videoReference: string
@@ -35,7 +34,7 @@ const copyToClipboard = async (platform: PlatformData) => {
 
   // Beri jarak 1 baris sebelum hashtag HANYA JIKA ada hashtag/mention
   if (platform.hashtags || platform.mentions) {
-    if (parts.length > 0) parts.push('') 
+    if (parts.length > 0) parts.push('')
     if (platform.hashtags) parts.push(platform.hashtags)
     if (platform.mentions) parts.push(platform.mentions)
   }

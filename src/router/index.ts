@@ -41,6 +41,17 @@ const router = createRouter({
         },
       ],
     },
+     {
+      path: '/ai',
+      component: SaasLayout,
+      children: [
+        {
+          path: '',
+          name: 'ai-caption',
+          component: () => import('../views/AiCaptionView.vue'),
+        },
+      ],
+    },
   ],
 })
 

@@ -20,7 +20,7 @@ const isMenuOpen = ref<boolean>(false)
       class="items-center gap-6 absolute left-1/2 -translate-x-1/2 hidden md:flex"
     >
       <router-link
-        to="/login"
+        to="/ai"
         class="text-slate-300 hover:text-lime-400 font-medium text-sm transition duration-400 rounded-xl shadow-lg"
         >Generate AI</router-link
       >
@@ -87,7 +87,7 @@ const isMenuOpen = ref<boolean>(false)
       class="md:hidden fixed top-24 left-4 right-4 bg-slate-950/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 flex flex-col gap-4 shadow-2xl z-40"
     >
       <router-link
-        to="/login"
+        to="/ai"
         class="text-slate-300 hover:text-lime-400 font-medium py-2 border-b border-slate-800/50"
         >Generate AI</router-link
       >
