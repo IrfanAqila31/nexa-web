@@ -29,15 +29,16 @@ const copyToClipboard = async (platform: PlatformData) => {
   // Merangkai teks yang akan disalin (Array -> Gabung dengan enter baris baru)
   const parts = []
 
-  parts.push(props.clipcard.videoReference) // Judul masuk paling atas
-  parts.push('') // Jarak 1 baris
-
+  // Hanya masukkan Caption dan Kode
   if (platform.caption) parts.push(platform.caption)
   if (platform.platformId) parts.push(`Kode: ${platform.platformId}`)
 
-  parts.push('') // Jarak 1 baris sebelum hashtag
-  if (platform.hashtags) parts.push(platform.hashtags)
-  if (platform.mentions) parts.push(platform.mentions)
+  // Beri jarak 1 baris sebelum hashtag HANYA JIKA ada hashtag/mention
+  if (platform.hashtags || platform.mentions) {
+    if (parts.length > 0) parts.push('') 
+    if (platform.hashtags) parts.push(platform.hashtags)
+    if (platform.mentions) parts.push(platform.mentions)
+  }
 
   // Gabungkan semua dengan enter (\n)
   const textToCopy = parts.join('\n').trim()
