@@ -40,11 +40,11 @@ const onSubmit = handleSubmit(async (values) => {
   }
 })
 
-const handleGoogleLogin = async (respone: { credential?: string }) => {
+const handleGoogleLogin = async (response: { credential?: string }) => {
   try {
-    if (!respone.credential) throw new Error('Token tidak ditemukan')
+    if (!response.credential) throw new Error('Token tidak ditemukan')
     // response.credential adalah ID Token yang dikirim oleh Google
-    const idToken = respone.credential
+    const idToken = response.credential
     await authStore.loginWithGoogle(idToken)
     toast.success('Login Google Berhasil!')
     router.push('/dashboard')
@@ -56,7 +56,7 @@ const handleGoogleLogin = async (respone: { credential?: string }) => {
 </script>
 
 <template>
-  <section class="w-full max-w-md pt-20" aria-labelledby="login-heading">
+  <section class="w-full max-w-md pt-20 pb-20" aria-labelledby="login-heading">
     <div
       class="bg-gray-900/80 backdrop-blur-xl border border-gray-800 p-8 rounded-2xl shadow-2xl relative z-10"
     >

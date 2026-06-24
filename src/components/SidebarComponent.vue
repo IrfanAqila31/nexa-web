@@ -19,7 +19,7 @@ const handleLogout = () => {
 
     <nav class="grow px-4 space-y-2" aria-label="Navigasi Dashboard">
       <router-link
-        to="/app"
+        to="/dashboard"
         class="block py-2 px-4 rounded hover:bg-slate-700 transition"
         exact-active-class="bg-blue-600 hover:bg-blue-600"
         >Dashboard</router-link

@@ -43,9 +43,9 @@ const handleModalClose = () => {
 }
 </script>
 <template>
-  <section class="max-w-4xl mx-auto pt-40 px-6">
-    <header class="flex justify-between items-center mb-8">
-      <div>
+  <section class="max-w-4xl mx-auto pt-40 pb-20 px-6">
+    <header class="flex justify-between flex-wrap items-center mb-8">
+      <div class="mb-5">
         <h1 class="text-3xl font-bold text-slate-100">
           Halo, {{ authStore.user?.name || 'Pengguna' }}!
         </h1>

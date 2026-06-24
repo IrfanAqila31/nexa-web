@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useAuthStore } from '../stores/authStore'
+import { useRouter } from 'vue-router'
 
+const authStore = useAuthStore()
+const router = useRouter()
 const isMenuOpen = ref<boolean>(false)
+
+const handleLogout = () => {
+  authStore.logout()
+  router.push('/login')
+  isMenuOpen.value = false
+}
 </script>
 
 <template>
@@ -25,22 +35,40 @@ const isMenuOpen = ref<boolean>(false)
         >Generate AI</router-link
       >
       <router-link
+        v-if="!authStore.isAuthenticated"
         to="/login"
         class="text-slate-300 hover:text-lime-400 font-medium text-sm transition duration-400 rounded-xl shadow-lg"
-        >Profil</router-link
+        >Panduan</router-link
+      >
+      <router-link
+        v-else
+        to="/dashboard"
+        class="text-slate-300 hover:text-lime-400 font-medium text-sm transition duration-400 rounded-xl shadow-lg"
+        >Dashboard</router-link
       >
     </nav>
     <div class="hidden md:flex items-center gap-4">
-      <router-link
-        to="/register"
-        class="text-slate-300 hover:text-white font-medium text-sm border border-slate-600 hover:bg-linear-to-r hover:from-lime-500 hover:to-green-500 transition duration-400 px-7 py-2 rounded-xl shadow-lg"
-        >Daftar</router-link
-      >
-      <router-link
-        to="/login"
-        class="text-slate-100 font-medium text-sm bg-linear-to-r from-lime-600 to-green-600 hover:bg-linear-to-r hover:from-lime-500 hover:to-green-500 transition duration-400 px-7 py-2 rounded-xl shadow-lg"
-        >Login</router-link
-      >
+      <template v-if="!authStore.isAuthenticated">
+        <router-link
+          to="/register"
+          class="text-slate-300 hover:text-white font-medium text-sm border border-slate-600 hover:bg-linear-to-r hover:from-lime-500 hover:to-green-500 transition duration-400 px-7 py-2 rounded-xl shadow-lg"
+          >Daftar</router-link
+        >
+        <router-link
+          to="/login"
+          class="text-slate-100 font-medium text-sm bg-linear-to-r from-lime-600 to-green-600 hover:bg-linear-to-r hover:from-lime-500 hover:to-green-500 transition duration-400 px-7 py-2 rounded-xl shadow-lg"
+          >Login</router-link
+        >
+      </template>
+      <template v-else>
+        <span class="text-sm font-medium text-slate-300 hidden lg:block">Halo, {{ authStore.user?.name || 'Pengguna' }}</span>
+        <button
+          @click="handleLogout"
+          class="text-slate-100 font-medium text-sm bg-slate-800 hover:bg-red-600 transition duration-400 px-5 py-2 rounded-xl shadow-lg"
+        >
+          Logout
+        </button>
+      </template>
     </div>
     <button
       class="md:hidden text-slate-300 hover:text-lime-400 focus:outline-none relative w-6 h-6"
@@ -88,25 +116,45 @@ const isMenuOpen = ref<boolean>(false)
     >
       <router-link
         to="/ai"
+        @click="isMenuOpen = false"
         class="text-slate-300 hover:text-lime-400 font-medium py-2 border-b border-slate-800/50"
         >Generate AI</router-link
       >
       <router-link
+        v-if="!authStore.isAuthenticated"
         to="/login"
+        @click="isMenuOpen = false"
         class="text-slate-300 hover:text-lime-400 font-medium py-2 border-b border-slate-800/50"
-        >Profil</router-link
+        >Panduan</router-link
       >
-      <div class="flex flex-col gap-3 mt-4">
+      <router-link
+        v-else
+        to="/dashboard"
+        @click="isMenuOpen = false"
+        class="text-slate-300 hover:text-lime-400 font-medium py-2 border-b border-slate-800/50"
+        >Dashboard</router-link
+      >
+      <div class="flex flex-col gap-3 mt-4" v-if="!authStore.isAuthenticated">
         <router-link
           to="/register"
+          @click="isMenuOpen = false"
           class="text-center text-slate-300 font-medium border border-slate-600 px-6 py-3 rounded-xl hover:bg-slate-800 transition"
           >Daftar</router-link
         >
         <router-link
           to="/login"
+          @click="isMenuOpen = false"
           class="text-center text-slate-100 font-medium bg-linear-to-r from-lime-600 to-green-600 px-6 py-3 rounded-xl shadow-lg"
           >Login</router-link
         >
+      </div>
+      <div class="flex flex-col gap-3 mt-4" v-else>
+        <button
+          @click="handleLogout"
+          class="text-center text-slate-100 font-medium bg-slate-800 hover:bg-red-600 px-6 py-3 rounded-xl shadow-lg transition"
+        >
+          Logout
+        </button>
       </div>
     </div>
   </transition>

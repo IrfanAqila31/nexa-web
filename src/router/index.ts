@@ -11,6 +11,7 @@ const router = createRouter({
     {
       path: '/',
       component: SaasLayout,
+
       children: [
         {
           path: '',
@@ -33,6 +34,7 @@ const router = createRouter({
     {
       path: '/dashboard',
       component: SaasLayout,
+      meta: { requiresAuth: true },
       children: [
         {
           path: '',
@@ -41,9 +43,10 @@ const router = createRouter({
         },
       ],
     },
-     {
+    {
       path: '/ai',
       component: SaasLayout,
+      meta: { requiresAuth: true },
       children: [
         {
           path: '',
@@ -53,6 +56,23 @@ const router = createRouter({
       ],
     },
   ],
+})
+// --- SATPAM ROUTER (Navigation Guard) ---
+router.beforeEach((to, _from, next) => {
+  const token = localStorage.getItem('token')
+
+  // 1. Jika rute butuh login (requiresAuth) TAPI token tidak ada
+  if (to.meta.requiresAuth && !token) {
+    next('/login') // Tendang ke halaman login
+  }
+  // 2. Jika sudah login (ada token) TAPI mencoba buka halaman login/register
+  else if ((to.path === '/login' || to.path === '/register') && token) {
+    next('/dashboard') // Arahkan kembali ke dashboard
+  }
+  // 3. Jika aman, persilakan lewat
+  else {
+    next()
+  }
 })
 
 export default router
