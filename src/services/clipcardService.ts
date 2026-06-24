@@ -16,4 +16,8 @@ export const clipcardService = {
 
     return respon.data
   },
+  async getAllClipcards() {
+    const respon = await api.get('/clipcards/')
+    return respon.data
+  },
 }
