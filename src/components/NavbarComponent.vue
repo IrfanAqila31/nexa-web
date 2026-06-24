@@ -30,6 +30,11 @@ const handleLogout = () => {
       class="items-center gap-6 absolute left-1/2 -translate-x-1/2 hidden md:flex"
     >
       <router-link
+        to="/"
+        class="text-slate-300 hover:text-lime-400 font-medium text-sm transition duration-400 rounded-xl shadow-lg"
+        >Home</router-link
+      >
+      <router-link
         to="/ai"
         class="text-slate-300 hover:text-lime-400 font-medium text-sm transition duration-400 rounded-xl shadow-lg"
         >Generate AI</router-link
@@ -61,7 +66,9 @@ const handleLogout = () => {
         >
       </template>
       <template v-else>
-        <span class="text-sm font-medium text-slate-300 hidden lg:block">Halo, {{ authStore.user?.name || 'Pengguna' }}</span>
+        <span class="text-sm font-medium text-slate-300 hidden lg:block"
+          >Halo, {{ authStore.user?.name || 'Pengguna' }}</span
+        >
         <button
           @click="handleLogout"
           class="text-slate-100 font-medium text-sm bg-slate-800 hover:bg-red-600 transition duration-400 px-5 py-2 rounded-xl shadow-lg"
@@ -114,6 +121,12 @@ const handleLogout = () => {
       v-if="isMenuOpen"
       class="md:hidden fixed top-24 left-4 right-4 bg-slate-950/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 flex flex-col gap-4 shadow-2xl z-40"
     >
+      <router-link
+        to="/"
+        @click="isMenuOpen = false"
+        class="text-slate-300 hover:text-lime-400 font-medium py-2 border-b border-slate-800/50"
+        >Home</router-link
+      >
       <router-link
         to="/ai"
         @click="isMenuOpen = false"

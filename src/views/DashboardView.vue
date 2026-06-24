@@ -5,6 +5,7 @@ import { ref, onMounted } from 'vue'
 import ClipcardFormModal from '../components/ClipcardFormModal.vue'
 import { clipcardService } from '../services/clipcardService'
 import ClipcardItem from '../components/ClipcardItem.vue'
+import { toast } from 'vue-sonner'
 
 const authStore = useAuthStore()
 
@@ -41,6 +42,16 @@ const handleModalClose = () => {
   showModal.value = false
   fetchClipcards()
 }
+
+const handleOpenModal = () => {
+  if (clipcards.value.length >= 5) {
+    toast.error('Batas maksimal 5 ClipCard telah tercapai! Silakan upgrade ke paket Premium.')
+    // Opsional: Jika Anda ingin langsung melempar mereka ke halaman pricing
+    // router.push('/pricing')
+    return // Menghentikan proses agar modal tidak terbuka
+  }
+  showModal.value = true // Buka modal jika masih di bawah 5
+}
 </script>
 <template>
   <section class="max-w-4xl mx-auto pt-40 pb-20 px-6">
@@ -53,7 +64,9 @@ const handleModalClose = () => {
           Selamat datang di Dashboard Easy Captions. Apa yang ingin Anda buat hari ini?
         </p>
       </div>
-      <PrimaryButton @click="showModal = true">Buat Clipcard Sekarang</PrimaryButton>
+      <PrimaryButton @click="handleOpenModal" class="shadow-lime-500/20"
+        >Buat Clipcard Sekarang</PrimaryButton
+      >
     </header>
 
     <!-- Jika masih kosong -->

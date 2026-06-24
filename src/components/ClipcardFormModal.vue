@@ -5,6 +5,8 @@ import * as z from 'zod'
 import PrimaryButton from './PrimaryButton.vue'
 import { clipcardService } from '../services/clipcardService'
 import { toast } from 'vue-sonner'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const emit = defineEmits(['close'])
 
@@ -54,8 +56,30 @@ const onSubmit = handleSubmit(async (values) => {
 
     // Tutup Modal
     emit('close')
-  } catch (error) {
-    toast.error('Gagal membuat Clipcard, silakan coba lagi.')
+  } catch (error: unknown) {
+    // Memberitahu TypeScript bentuk struktur error dari Backend/Axios
+    interface AxiosErrorType {
+      response?: {
+        status?: number
+        data?: { message?: string }
+      }
+    }
+    
+    // Konversi error yang 'unknown' menjadi tipe yang sudah kita buat
+    const err = error as AxiosErrorType
+
+    // Cek apakah error dari backend adalah 403 (Kuota Habis)
+    if (err.response && err.response.status === 403) {
+      const errorMessage = err.response.data?.message || 'Kuota gratis Anda habis.'
+      toast.error(errorMessage)
+
+      emit('close') // Tutup form
+      router.push('/pricing') // Lempar user ke halaman Upgrade Premium!
+    } else {
+      // Tangani error API lainnya (Validasi, Server Error, dll)
+      const genericError = err.response?.data?.message || 'Gagal membuat Clipcard, silakan coba lagi.'
+      toast.error(genericError)
+    }
     console.error(error)
   }
 })
